@@ -1,3 +1,5 @@
+import os
+
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -28,12 +30,15 @@ def main_menu(menuTitle,menuOptions,menuSpacing):
     
     try:
         choice = int(input("Enter Choice : "))
-        divider()
+        clearScreen()
         if(choice >= 1 and choice <= len(menuOptions.keys())):
             return choice
         else:
             return "Invalid Input"
     
     except:
+        clearScreen()
         return "Invalid Input"
 
+def clearScreen():
+    os.system("cls")
