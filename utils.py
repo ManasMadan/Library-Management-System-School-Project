@@ -21,24 +21,25 @@ def invalidInput():
     divider()
 
 
-def main_menu(menuTitle,menuOptions,menuSpacing):
-    print(f"{Colors.HEADER}{menuSpacing}{menuTitle} {Colors.ENDC}")
-    divider()
-
-    for choice,statement in menuOptions.items():
-        print(f"{Colors.OKBLUE}{Colors.BOLD}{choice} - {statement[0]}{Colors.ENDC}")
-    
-    try:
-        choice = int(input("Enter Choice : "))
-        clearScreen()
-        if(choice >= 1 and choice <= len(menuOptions.keys())):
-            return choice
-        else:
-            return "Invalid Input"
-    
-    except:
-        clearScreen()
-        return "Invalid Input"
+def showMenu(menuTitle,menuOptions,menuSpacing):
+    while True:
+        print(f"{Colors.HEADER}{menuSpacing}{menuTitle} {Colors.ENDC}")
+        divider()
+        for choice,statement in menuOptions.items():
+            print(f"{Colors.OKBLUE}{Colors.BOLD}{choice} - {statement[0]}{Colors.ENDC}")
+        try:
+            choice = int(input("Enter Choice : "))
+            clearScreen()
+            if(choice >= 1 and choice <= len(menuOptions.keys())):
+                if(choice == len(menuOptions.keys())):
+                    break
+                menuOptions[choice][1]()
+                divider()
+            else:
+                invalidInput()
+        except:
+            clearScreen()
+            invalidInput()
 
 def clearScreen():
     os.system("cls")
