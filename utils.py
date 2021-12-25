@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import errorcode
 from mysql.connector import (connection)
 import sqlData
+import bcrypt
 
 class Colors:
     HEADER = '\033[95m'
@@ -23,7 +24,6 @@ def divider():
 def invalidInput():
     print(f"{Colors.FAIL}Invalid Input Enter A Choice From the Menu Above{Colors.ENDC}")
     divider()
-
 
 def showMenu(menuTitle,menuOptions,menuSpacing):
     while True:
@@ -72,3 +72,9 @@ def handleSQLException(err):
         return ("Duplicate Entry")
     else:
         return (err)
+
+def hashPassword(password):
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+def checkPassword(password, hashedPassword):
+    return bcrypt.checkpw(password.encode("utf-8"), hashedPassword.encode("utf-8"))
