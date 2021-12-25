@@ -70,6 +70,8 @@ def handleSQLException(err):
         return ("Database does not exist")
     elif err.errno == 1062:
         return ("Duplicate Entry")
+    elif err.errno == 1451:
+        return ("Cannot Delete A Entry that Is A Member Of Another Table, the book or user must be issued to someone try removing the issued record first")
     else:
         return (err)
 

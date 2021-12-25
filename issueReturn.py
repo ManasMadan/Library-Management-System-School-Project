@@ -95,9 +95,12 @@ def returnIssuedBooks():
 
         DAYS_ISSUED = 0
         try:
-            DAYS_ISSUED = int(str(date.today() - DATE_ISSUED).split()[0])
+            DAYS_ISSUED = int(str(date.today() - DATE_ISSUED).split()[0]) - 7
         except:
             DATE_ISSUED = 0
+
+        if DAYS_ISSUED < 0:
+            DAYS_ISSUED = 0
 
         choice = input(f"{Colors.WARNING} Do You Wish To Return The Book with ISBN {BOOK_ISBN} Associated With User {USER_NAME} The Fine Applicable Would Be Rs. {DAYS_ISSUED * FINE_PER_DAY}(y/n): ")
 
@@ -113,7 +116,7 @@ def returnIssuedBooks():
         if(type(res) == str):
             print("Error : ", res)
         else:
-            print("Member Deleted")
+            print("Issued Record Deleted")
     except Exception as err:
         # clearScreen()
         print(err)
