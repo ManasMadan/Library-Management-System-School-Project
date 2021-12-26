@@ -23,17 +23,23 @@ class Colors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
 
+
 #  MenuSpacing Variable To Center The menu Heading by adding spaces as prefix
 menuSpacing = "          "
 
 # Function To Print Divider in Green Color
+
+
 def divider():
     print(f"{Colors.OKGREEN}=============================={Colors.ENDC}")
 
 # Function To Print Invalid Input in Red Color
+
+
 def invalidInput():
     print(f"{Colors.FAIL}Invalid Input Enter A Choice From the Menu Above{Colors.ENDC}")
     divider()
+
 
 def clearScreen():
     os.system("cls")
@@ -41,12 +47,13 @@ def clearScreen():
 
 # **********************************Menu Functions****************************************
 # Function To Print Menu
-def showMenu(menuTitle,menuOptions,menuSpacing):
+def showMenu(menuTitle, menuOptions, menuSpacing):
     while True:
         print(f"{Colors.HEADER}{menuSpacing}{menuTitle} {Colors.ENDC}")
         divider()
-        for choice,statement in menuOptions.items():
-            print(f"{Colors.OKBLUE}{Colors.BOLD}{choice} - {statement[0]}{Colors.ENDC}")
+        for choice, statement in menuOptions.items():
+            print(
+                f"{Colors.OKBLUE}{Colors.BOLD}{choice} - {statement[0]}{Colors.ENDC}")
         try:
             choice = int(input("Enter Choice : "))
             clearScreen()
@@ -68,19 +75,22 @@ def showMenu(menuTitle,menuOptions,menuSpacing):
 # **********************************SQL Functions Start****************************************
 # SQL Function To Add/Delete and Update Data in the database
 # NOTE : Cannot Be Used To Read Data From Cursor Object as Connection is Broken as Soon As The Function Ends
-def executeSQLCommitQuery(query,data):
+def executeSQLCommitQuery(query, data):
     try:
-        cnx = connection.MySQLConnection(user=sqlData.SQL_USERNAME,password=sqlData.SQL_PASSWORD,host='localhost',database=sqlData.DATABASE_NAME)
+        cnx = connection.MySQLConnection(
+            user=sqlData.SQL_USERNAME, password=sqlData.SQL_PASSWORD, host='localhost', database=sqlData.DATABASE_NAME)
         Cursor = cnx.cursor()
-        Cursor.execute(query,data)
+        Cursor.execute(query, data)
         cnx.commit()
         Cursor.close()
-        cnx.close()
+        cnx.close
         return Cursor
     except mysql.connector.Error as err:
         return handleSQLException(err)
 
 # SQL Function To Handle All Major SQL ErrorCodes else return error message
+
+
 def handleSQLException(err):
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         return ("Something is wrong with your user name or password")
@@ -100,5 +110,7 @@ def hashPassword(password):
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
 # Compare Password Strings wsing bcrypt
+
+
 def checkPassword(password, hashedPassword):
     return bcrypt.checkpw(password.encode("utf-8"), hashedPassword.encode("utf-8"))
