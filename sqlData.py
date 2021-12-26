@@ -1,3 +1,4 @@
 DATABASE_NAME = "library"
-SQL_USERNAME = "root"
-SQL_PASSWORD = "root"
+# Edit The Variables below TO Run THe Code In Your Computer
+SQL_USERNAME = "root" # Replace root with your sql username [DEFAULT SQL Username is root]
+SQL_PASSWORD = "root" # Replace root with your sql password

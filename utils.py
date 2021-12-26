@@ -1,10 +1,18 @@
+# **********************************Imports****************************************
+# OS Module To Implement The Clear Screen Function
 import os
+# MySQL Connector
 import mysql.connector
 from mysql.connector import errorcode
 from mysql.connector import (connection)
-import sqlData
+# bcrypt library to hash passwords
 import bcrypt
+# Local Python File sqlData containing the sql Username ,Password and Database Name
+import sqlData
 
+
+# **********************************General Functions****************************************
+# Class Colors to print clorful text in python terminal
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -14,17 +22,25 @@ class Colors:
     FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
 
+#  MenuSpacing Variable To Center The menu Heading by adding spaces as prefix
 menuSpacing = "          "
 
+# Function To Print Divider in Green Color
 def divider():
     print(f"{Colors.OKGREEN}=============================={Colors.ENDC}")
 
+# Function To Print Invalid Input in Red Color
 def invalidInput():
     print(f"{Colors.FAIL}Invalid Input Enter A Choice From the Menu Above{Colors.ENDC}")
     divider()
 
+def clearScreen():
+    os.system("cls")
+
+
+# **********************************Menu Functions****************************************
+# Function To Print Menu
 def showMenu(menuTitle,menuOptions,menuSpacing):
     while True:
         print(f"{Colors.HEADER}{menuSpacing}{menuTitle} {Colors.ENDC}")
@@ -48,9 +64,10 @@ def showMenu(menuTitle,menuOptions,menuSpacing):
             clearScreen()
             invalidInput()
 
-def clearScreen():
-    os.system("cls")
 
+# **********************************SQL Functions Start****************************************
+# SQL Function To Add/Delete and Update Data in the database
+# NOTE : Cannot Be Used To Read Data From Cursor Object as Connection is Broken as Soon As The Function Ends
 def executeSQLCommitQuery(query,data):
     try:
         cnx = connection.MySQLConnection(user=sqlData.SQL_USERNAME,password=sqlData.SQL_PASSWORD,host='localhost',database=sqlData.DATABASE_NAME)
@@ -63,6 +80,7 @@ def executeSQLCommitQuery(query,data):
     except mysql.connector.Error as err:
         return handleSQLException(err)
 
+# SQL Function To Handle All Major SQL ErrorCodes else return error message
 def handleSQLException(err):
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         return ("Something is wrong with your user name or password")
@@ -75,8 +93,12 @@ def handleSQLException(err):
     else:
         return (err)
 
+
+# **********************************Password Functions****************************************
+# Hash Password String After Adding Salt using bcrypt
 def hashPassword(password):
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
+# Compare Password Strings wsing bcrypt
 def checkPassword(password, hashedPassword):
     return bcrypt.checkpw(password.encode("utf-8"), hashedPassword.encode("utf-8"))
